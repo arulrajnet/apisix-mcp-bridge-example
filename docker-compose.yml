@@ -1,0 +1,45 @@
+services:
+
+  apisix:
+    build:
+      context: .
+      dockerfile: apisix/Dockerfile
+      platforms:
+        - linux/amd64
+      args:
+        DOCKER_VERSION: "28.1.1"
+    image: arulrajnet/apisix:dev
+    restart: on-failure
+    user: root
+    volumes:
+      - ${PWD}/apisix/config.yaml:/usr/local/apisix/conf/config.yaml
+      - ${PWD}/apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml
+      - ${PWD}/apisix/debug.yaml:/usr/local/apisix/conf/debug.yaml
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      # Web - Proxy
+      - 80:80
+    environment:
+      APISIX_STAND_ALONE: "true"
+      ATLASSIAN_SITE_NAME: "${ATLASSIAN_SITE_NAME}"
+      ATLASSIAN_BITBUCKET_USERNAME: "${ATLASSIAN_BITBUCKET_USERNAME}"
+      ATLASSIAN_BITBUCKET_APP_PASSWORD: "${ATLASSIAN_BITBUCKET_APP_PASSWORD}"
+
+  mcp-bitbucket:
+    build:
+      context: .
+      dockerfile: mcp-server/Dockerfile
+      platforms:
+        - linux/amd64
+      args:
+        BITBUCKET_MCP_SERVER_VERSION: "v1.39.7"
+    image: arulrajnet/mcp-bitbucket:v1.39.7
+    restart: on-failure
+    environment:
+      ATLASSIAN_SITE_NAME: "${ATLASSIAN_SITE_NAME}"
+      ATLASSIAN_BITBUCKET_USERNAME: "${ATLASSIAN_BITBUCKET_USERNAME}"
+      ATLASSIAN_BITBUCKET_APP_PASSWORD: "${ATLASSIAN_BITBUCKET_APP_PASSWORD}"
+
+  whoami:
+    image: traefik/whoami:latest
+    restart: on-failure

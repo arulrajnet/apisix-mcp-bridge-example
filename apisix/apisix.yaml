@@ -1,0 +1,57 @@
+global_rules:
+  -
+    id: 1
+    plugins:
+      response-rewrite:
+          headers:
+            set:
+              Server: 'DummyServerName'
+
+services:
+  # -
+  #   id: 1
+  #   upstream:
+  #     nodes:
+  #       mcp-bitbucket: 1
+  #     type: roundrobin
+  -
+    id: 2
+    upstream:
+      nodes:
+        whoami:80: 2
+      type: roundrobin
+
+routes:
+  -
+    id: 1
+    uris:
+      - /mcp-bitbucket/
+      - /mcp-bitbucket/*
+    # service_id: 1
+    plugins:
+      mcp-bridge:
+        base_uri: "/mcp-bitbucket"
+        command: "docker"
+        args:
+          - "run"
+          - "--rm"
+          - "-i"
+          - "-e"
+          - "ATLASSIAN_SITE_NAME=${{ATLASSIAN_SITE_NAME}}"
+          - "-e"
+          - "ATLASSIAN_BITBUCKET_USERNAME=${{ATLASSIAN_BITBUCKET_USERNAME}}"
+          - "-e"
+          - "ATLASSIAN_BITBUCKET_APP_PASSWORD=${{ATLASSIAN_BITBUCKET_APP_PASSWORD}}"
+          - "arulrajnet/mcp-bitbucket:v1.39.7"
+          - "node"
+          - "dist/index.js"
+
+  -
+    id: 2
+    uris:
+      - /whoami
+      - /whoami/*
+    service_id: 2
+    priority: 100
+
+#END
