@@ -1,6 +1,6 @@
 FROM node:23.11.0-bookworm AS builder
 
-ARG BITBUCKET_MCP_SERVER_VERSION=v1.39.7
+ARG BITBUCKET_MCP_SERVER_VERSION=v1.41.1
 
 RUN apt-get update && apt-get install -y git && \
     apt-get clean && \

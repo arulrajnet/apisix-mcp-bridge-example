@@ -1,3 +1,6 @@
+nginx_config:
+  user: root root
+
 apisix:
   node_listen:
     - port: 80

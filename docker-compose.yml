@@ -24,6 +24,8 @@ services:
       ATLASSIAN_SITE_NAME: "${ATLASSIAN_SITE_NAME}"
       ATLASSIAN_BITBUCKET_USERNAME: "${ATLASSIAN_BITBUCKET_USERNAME}"
       ATLASSIAN_BITBUCKET_APP_PASSWORD: "${ATLASSIAN_BITBUCKET_APP_PASSWORD}"
+      BITBUCKET_DEFAULT_WORKSPACE: "${BITBUCKET_DEFAULT_WORKSPACE}"
+      DOCKER_HOST: "unix:///var/run/docker.sock"
 
   mcp-bitbucket:
     build:
@@ -32,8 +34,8 @@ services:
       platforms:
         - linux/amd64
       args:
-        BITBUCKET_MCP_SERVER_VERSION: "v1.39.7"
-    image: arulrajnet/mcp-bitbucket:v1.39.7
+        BITBUCKET_MCP_SERVER_VERSION: "v1.41.1"
+    image: arulrajnet/mcp-bitbucket:v1.41.1
     restart: on-failure
     environment:
       ATLASSIAN_SITE_NAME: "${ATLASSIAN_SITE_NAME}"
