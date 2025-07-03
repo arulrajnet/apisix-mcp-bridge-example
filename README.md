@@ -98,22 +98,6 @@ Configure VS Code MCP client to connect to the APISIX MCP Bridge endpoint:
 }
 ```
 
-### Issue with APISix
-
-The VSCode MCP client is not able to connect with the APISIX MCP Bridge plugin. The MCP server is not running. The APISIX MCP is supposted to run the command defined in the plugin configuration. Here is the log output from the VSCode.
-
-```plaintext
-2025-06-15 19:12:15.335 [info] Starting server bitbucket-remote-server
-2025-06-15 19:12:15.335 [info] Connection state: Starting
-2025-06-15 19:12:15.340 [info] Starting server from LocalProcess extension host
-2025-06-15 19:12:15.346 [info] Connection state: Running
-2025-06-15 19:12:20.349 [info] Waiting for server to respond to `initialize` request...
-2025-06-15 19:12:25.348 [info] Waiting for server to respond to `initialize` request...
-2025-06-15 19:12:30.348 [info] Waiting for server to respond to `initialize` request...
-2025-06-15 19:12:35.348 [info] Waiting for server to respond to `initialize` request...
-2025-06-15 19:12:40.347 [info] Waiting for server to respond to `initialize` request...
-```
-
 ## Cleanup
 
 Stop and remove all services:
